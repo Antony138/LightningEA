@@ -130,6 +130,45 @@ class CLEAProtocol: NSObject, StreamDelegate {
         log(message: "RESET", obj: self)
     }
     
+    // MARK: 鉴别是不是预期的指令(其他类没有用到这个方法,不可以写成私有?)
+    // MARK: BOOT_FW_TAG、CANCEL_TAG不是预期的?
+    func responseExpected(packetTag: UInt8) -> Bool {
+        if packetTag == CLEAProtocol.BOOT_FW_TAG || packetTag == CLEAProtocol.CANCEL_TAG {
+            return false
+        }
+        return true
+    }
+    
+    // MARK: StreamDelegate
+    func stream(_ aStream: Stream, handle eventCode: Stream.Event) {
+        switch eventCode {
+        case Stream.Event.openCompleted:
+            log(message: "\(aStream) stream opened", obj: self)
+            
+        case Stream.Event.hasBytesAvailable:
+            log(message: "\(aStream) stream has data", obj: self)
+            
+        case Stream.Event.hasSpaceAvailable:
+            log(message: "\(aStream) stream has space", obj: self)
+            
+            // 可以发数据给硬件(其他指令也发送数据,和在这里发,有什么区别?)
+            objc_sync_enter(self)
+            // 发送数据
+            sendRequest()
+            objc_sync_exit(self)
+            
+        case Stream.Event.errorOccurred:
+            log(message: "stream error", obj: self)
+            
+        case Stream.Event.endEncountered:
+            log(message: "stream EOF", obj: self)
+            
+        default:
+            log(message: "stream other event \(eventCode)", obj: self)
+        }
+    }
+    
+    
     // MARK:- 私有部分
     // 协议字符串
     private let eaProtocolString: String = ""
@@ -137,12 +176,79 @@ class CLEAProtocol: NSObject, StreamDelegate {
     private var clEASession: EASession?
     // 这是一个类实例?
     private var dataPackets = Queue<[UInt8]>()
-    // 数组,装什么数据的？
+    // 数组,装什么数据的？(应该是发送的数据)
     private var waitingResponseFor: [UInt8]?
     // 重试次数?
     private var retries = 0
     // 超时定时器?
     private var toutTimer: Timer?
+    
+    // MARK: 实作发送数据给硬件的方法
+    private func sendRequest() {
+        if !dataPackets.isEmpty() {
+            // 如果dataPackets不为空(就是有内容咯)(注意前面的感叹号)
+            
+            if let canSend = clEASession?.outputStream?.hasSpaceAvailable {
+                
+                if canSend && waitingResponseFor == nil {
+                    // waitingResponseFor为空才能发送?
+                    
+                    if let dataPacket = dataPackets.dequeue() {
+                        log(message: ">>>>>  packet tag \(dataPacket[0]) packet sz \(dataPacket.count)", obj: self)
+                        
+                        // 传输数据
+                        let cnt = clEASession!.outputStream!.write(dataPacket, maxLength: dataPacket.count)
+                        
+                        // 如果发送的数据量和原数据包量(dataPacket)数量不一致,就打印出"只发送了多少bytes"
+                        // 这里也可以使用类似下面的断言吧?
+                        if cnt != dataPacket.count {
+                            log(message: "**** only \(cnt) bytes sent", obj: self)
+                        }
+                        
+                        // "断言": 如果发送量和原有数据包量相等,就打印"数据包可以一次发送完毕"
+                        assert(cnt == dataPacket.count, "Code assumes that the whole data packet can be sent in a single write call")
+                        
+                        if responseExpected(packetTag: dataPacket[0]) {
+                            // 如果是预期的指令,将要发送的数据(数据包)赋值给waitingResponseFor(用途是?)
+                            // 非预期指令是:BOOT_FW_TAG、CANCEL_TAG，其他都是预期的指令
+                            waitingResponseFor = dataPacket
+                            
+                            // 开启定时器
+                            startTimeOutTimer()
+                        }
+                    } else {
+                        // dataPackets中没有数据?
+                        log(message: "**** Queue is empty?!", obj: self)
+                    }
+                } else {
+                    // 如果不能发送, 打印出来：是hasSpaceAvailable为false，还是waitingResponseFor不为空
+                    var s = "Can't send now, device is busy -"
+                    if !canSend {
+                        s += " does not accept data! "
+                    }
+                    if waitingResponseFor != nil {
+                        s += " not responded yet!"
+                    }
+                    log(message: s, obj: self)
+                }
+            } else {
+                // outputStream的hasSpaceAvailable为false
+                log(message: "No connected EA", obj: self)
+            }
+        } else {
+            // dataPackets的isEmpty为YES
+            log(message: "Queue is empty", obj: self)
+        }
+    }
+    
+    // 开启定时器
+    private func startTimeOutTimer() {
+        toutTimer = Timer.scheduledTimer(timeInterval: CLEAProtocol.TIMEOUT,
+                                         target: self,
+                                         selector: #selector(CLEAProtocol.retryRequest),
+                                         userInfo: nil,
+                                         repeats: false)
+    }
     
     // 停止定时器
     private func stopTimeOutTimer() {
@@ -152,13 +258,32 @@ class CLEAProtocol: NSObject, StreamDelegate {
         retries = 0
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-
+    // 重新尝试
+    // @objc关键字,表示要暴露给Objectibe-C使用？（这里没有需要和OC混编吧?）
+    @objc private func retryRequest() {
+        
+        objc_sync_enter(self)
+        if waitingResponseFor != nil {
+            // 如果等待发送的数据不为空
+            
+            if retries < CLEAProtocol.RETRY_CNT {
+                // 如果重试次数少于10次
+                log(message: "response timeout for packet with tag \(waitingResponseFor![0]) packet sz \(waitingResponseFor!.count)", obj: self)
+                
+                dataPackets.queue(data: waitingResponseFor!)
+                
+                waitingResponseFor = nil
+                
+                retries += 1
+                
+                sendRequest()
+            } else {
+                // TODO:重新设置状态?
+            }
+        } else {
+            // waitingResponseFor是空,没有数据需要重新发送?
+            log(message: "nothing to retry?!", obj: self)
+        }
+        objc_sync_exit(self)
+    }
 }
