@@ -182,6 +182,34 @@ class CLEAProtocol: NSObject, StreamDelegate {
         }
     }
     
+    // MARK:- Commands(指令部分)
+    // MARK: Command-查询状态
+    func requestStatusUpdate() {
+        log(message: "status request", obj: self)
+        
+        let dataPacket: [UInt8] = [CLEAProtocol.STATUS_TAG]
+        
+        objc_sync_enter(self)
+        // 组织数据. queue()方法,其实是append数据到数组中
+        dataPackets.queue(data: dataPacket)
+        
+        // 发送数据
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
+    // MARK: Command-请求升级
+    func requestFwUpdate() {
+        log(message: "update FW request", obj: self)
+        
+        let dataPacket: [UInt8] = [CLEAProtocol.UPDATE_FW_TAG]
+        
+        objc_sync_enter(self)
+        dataPackets.queue(data: dataPacket)
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
     
     // MARK:- 私有部分
     // 协议字符串
