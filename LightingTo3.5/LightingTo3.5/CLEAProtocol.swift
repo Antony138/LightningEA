@@ -39,16 +39,18 @@ class Queue<T> {
 class CLEAProtocol: NSObject, StreamDelegate {
     
     // MARK: 常量
+    
+    // 以下是指令相关的Packet Tag(原项目用1～5,不是0x开头的,确认有无影响)
     // 请求硬件状态?
-    static let STATUS_TAG: UInt8       = 1
+    static let STATUS_TAG: UInt8       = 0x01
     // 请求固件升级
-    static let UPDATE_FW_TAG: UInt8    = 2
+    static let UPDATE_FW_TAG: UInt8    = 0x02
     // 烧录固件
-    static let FLASH_FW_BLK_TAG: UInt8 = 3
+    static let FLASH_FW_BLK_TAG: UInt8 = 0x03
     // 启动固件升级?
-    static let BOOT_FW_TAG:UInt8       = 4
+    static let BOOT_FW_TAG:UInt8       = 0x04
     // 取消固件升级
-    static let CANCEL_TAG: UInt8       = 5
+    static let CANCEL_TAG: UInt8       = 0x05
     // 写入
     static let WRITE_TAG: UInt8        = 0xEA
     // 读取
