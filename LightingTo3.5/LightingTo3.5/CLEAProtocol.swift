@@ -210,6 +210,26 @@ class CLEAProtocol: NSObject, StreamDelegate {
         objc_sync_exit(self)
     }
     
+    // MARK: Command-烧录固件
+    // 固件大小是14KB, 一次发送的数据量大小限制是多少? 是需要分拆数据包进行发送吗?
+    func requestFwBlockFlash(blkNum: UInt8, fwData: [UInt8]) {
+        log(message: "FW block to flash request - \(blkNum)", obj: self)
+        
+        // 声明一个数组变量, 前两个byte分别存放0x03、blkNum
+        var dataPacket: [UInt8] = [CLEAProtocol.FLASH_FW_BLK_TAG, blkNum]
+        
+        // TODO: 两个64要用CLEADevice.FW_BLOCK_SIZE代替
+        for i in 0..<64 {
+            // 组织数据(为什么不用dataPackets的queue了？)
+            dataPacket.append(fwData[Int(blkNum) * 64 + i])
+        }
+        
+        objc_sync_enter(self)
+        dataPackets.queue(data: dataPacket)
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
     
     // MARK:- 私有部分
     // 协议字符串
