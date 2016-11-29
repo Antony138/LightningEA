@@ -1,0 +1,553 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F42AE4E71DEC019000E31BB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */; };
+		F42AE4E91DEC019000E31BB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE4E81DEC019000E31BB4 /* ViewController.swift */; };
+		F42AE4EC1DEC019000E31BB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42AE4EA1DEC019000E31BB4 /* Main.storyboard */; };
+		F42AE4EE1DEC019000E31BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */; };
+		F42AE4F11DEC019000E31BB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42AE4EF1DEC019000E31BB4 /* LaunchScreen.storyboard */; };
+		F42AE4FC1DEC019100E31BB4 /* LightingTo3_5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE4FB1DEC019100E31BB4 /* LightingTo3_5Tests.swift */; };
+		F42AE5071DEC019100E31BB4 /* LightingTo3_5UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE5061DEC019100E31BB4 /* LightingTo3_5UITests.swift */; };
+		F42AE5151DEC01F300E31BB4 /* stm8l10x_fw.s19 in Resources */ = {isa = PBXBuildFile; fileRef = F42AE5141DEC01F300E31BB4 /* stm8l10x_fw.s19 */; };
+		F42AE5181DEC065000E31BB4 /* CLEAProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F42AE4F81DEC019100E31BB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F42AE4DB1DEC019000E31BB4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F42AE4E21DEC019000E31BB4;
+			remoteInfo = LightingTo3.5;
+		};
+		F42AE5031DEC019100E31BB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F42AE4DB1DEC019000E31BB4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F42AE4E21DEC019000E31BB4;
+			remoteInfo = LightingTo3.5;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F42AE4E31DEC019000E31BB4 /* LightingTo3.5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightingTo3.5.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F42AE4E81DEC019000E31BB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F42AE4EB1DEC019000E31BB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F42AE4F01DEC019000E31BB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F42AE4F21DEC019000E31BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F42AE4F71DEC019100E31BB4 /* LightingTo3.5Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightingTo3.5Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F42AE4FB1DEC019100E31BB4 /* LightingTo3_5Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingTo3_5Tests.swift; sourceTree = "<group>"; };
+		F42AE4FD1DEC019100E31BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F42AE5021DEC019100E31BB4 /* LightingTo3.5UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightingTo3.5UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F42AE5061DEC019100E31BB4 /* LightingTo3_5UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingTo3_5UITests.swift; sourceTree = "<group>"; };
+		F42AE5081DEC019100E31BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F42AE5141DEC01F300E31BB4 /* stm8l10x_fw.s19 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stm8l10x_fw.s19; sourceTree = "<group>"; };
+		F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLEAProtocol.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F42AE4E01DEC019000E31BB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F42AE4F41DEC019100E31BB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F42AE4FF1DEC019100E31BB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F42AE4DA1DEC019000E31BB4 = {
+			isa = PBXGroup;
+			children = (
+				F42AE4E51DEC019000E31BB4 /* LightingTo3.5 */,
+				F42AE4FA1DEC019100E31BB4 /* LightingTo3.5Tests */,
+				F42AE5051DEC019100E31BB4 /* LightingTo3.5UITests */,
+				F42AE4E41DEC019000E31BB4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F42AE4E41DEC019000E31BB4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F42AE4E31DEC019000E31BB4 /* LightingTo3.5.app */,
+				F42AE4F71DEC019100E31BB4 /* LightingTo3.5Tests.xctest */,
+				F42AE5021DEC019100E31BB4 /* LightingTo3.5UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F42AE4E51DEC019000E31BB4 /* LightingTo3.5 */ = {
+			isa = PBXGroup;
+			children = (
+				F42AE5161DEC01FD00E31BB4 /* Fw */,
+				F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */,
+				F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */,
+				F42AE4E81DEC019000E31BB4 /* ViewController.swift */,
+				F42AE4EA1DEC019000E31BB4 /* Main.storyboard */,
+				F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */,
+				F42AE4EF1DEC019000E31BB4 /* LaunchScreen.storyboard */,
+				F42AE4F21DEC019000E31BB4 /* Info.plist */,
+			);
+			path = LightingTo3.5;
+			sourceTree = "<group>";
+		};
+		F42AE4FA1DEC019100E31BB4 /* LightingTo3.5Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F42AE4FB1DEC019100E31BB4 /* LightingTo3_5Tests.swift */,
+				F42AE4FD1DEC019100E31BB4 /* Info.plist */,
+			);
+			path = LightingTo3.5Tests;
+			sourceTree = "<group>";
+		};
+		F42AE5051DEC019100E31BB4 /* LightingTo3.5UITests */ = {
+			isa = PBXGroup;
+			children = (
+				F42AE5061DEC019100E31BB4 /* LightingTo3_5UITests.swift */,
+				F42AE5081DEC019100E31BB4 /* Info.plist */,
+			);
+			path = LightingTo3.5UITests;
+			sourceTree = "<group>";
+		};
+		F42AE5161DEC01FD00E31BB4 /* Fw */ = {
+			isa = PBXGroup;
+			children = (
+				F42AE5141DEC01F300E31BB4 /* stm8l10x_fw.s19 */,
+			);
+			name = Fw;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F42AE4E21DEC019000E31BB4 /* LightingTo3.5 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F42AE50B1DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5" */;
+			buildPhases = (
+				F42AE4DF1DEC019000E31BB4 /* Sources */,
+				F42AE4E01DEC019000E31BB4 /* Frameworks */,
+				F42AE4E11DEC019000E31BB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LightingTo3.5;
+			productName = LightingTo3.5;
+			productReference = F42AE4E31DEC019000E31BB4 /* LightingTo3.5.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F42AE4F61DEC019100E31BB4 /* LightingTo3.5Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F42AE50E1DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5Tests" */;
+			buildPhases = (
+				F42AE4F31DEC019100E31BB4 /* Sources */,
+				F42AE4F41DEC019100E31BB4 /* Frameworks */,
+				F42AE4F51DEC019100E31BB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F42AE4F91DEC019100E31BB4 /* PBXTargetDependency */,
+			);
+			name = LightingTo3.5Tests;
+			productName = LightingTo3.5Tests;
+			productReference = F42AE4F71DEC019100E31BB4 /* LightingTo3.5Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F42AE5011DEC019100E31BB4 /* LightingTo3.5UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F42AE5111DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5UITests" */;
+			buildPhases = (
+				F42AE4FE1DEC019100E31BB4 /* Sources */,
+				F42AE4FF1DEC019100E31BB4 /* Frameworks */,
+				F42AE5001DEC019100E31BB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F42AE5041DEC019100E31BB4 /* PBXTargetDependency */,
+			);
+			name = LightingTo3.5UITests;
+			productName = LightingTo3.5UITests;
+			productReference = F42AE5021DEC019100E31BB4 /* LightingTo3.5UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F42AE4DB1DEC019000E31BB4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Spark Technology Inc.";
+				TargetAttributes = {
+					F42AE4E21DEC019000E31BB4 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = H2VAN67H99;
+						ProvisioningStyle = Automatic;
+					};
+					F42AE4F61DEC019100E31BB4 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = H2VAN67H99;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F42AE4E21DEC019000E31BB4;
+					};
+					F42AE5011DEC019100E31BB4 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = H2VAN67H99;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F42AE4E21DEC019000E31BB4;
+					};
+				};
+			};
+			buildConfigurationList = F42AE4DE1DEC019000E31BB4 /* Build configuration list for PBXProject "LightingTo3.5" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F42AE4DA1DEC019000E31BB4;
+			productRefGroup = F42AE4E41DEC019000E31BB4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F42AE4E21DEC019000E31BB4 /* LightingTo3.5 */,
+				F42AE4F61DEC019100E31BB4 /* LightingTo3.5Tests */,
+				F42AE5011DEC019100E31BB4 /* LightingTo3.5UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F42AE4E11DEC019000E31BB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F42AE4F11DEC019000E31BB4 /* LaunchScreen.storyboard in Resources */,
+				F42AE4EE1DEC019000E31BB4 /* Assets.xcassets in Resources */,
+				F42AE4EC1DEC019000E31BB4 /* Main.storyboard in Resources */,
+				F42AE5151DEC01F300E31BB4 /* stm8l10x_fw.s19 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F42AE4F51DEC019100E31BB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F42AE5001DEC019100E31BB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F42AE4DF1DEC019000E31BB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F42AE4E91DEC019000E31BB4 /* ViewController.swift in Sources */,
+				F42AE5181DEC065000E31BB4 /* CLEAProtocol.swift in Sources */,
+				F42AE4E71DEC019000E31BB4 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F42AE4F31DEC019100E31BB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F42AE4FC1DEC019100E31BB4 /* LightingTo3_5Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F42AE4FE1DEC019100E31BB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F42AE5071DEC019100E31BB4 /* LightingTo3_5UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F42AE4F91DEC019100E31BB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F42AE4E21DEC019000E31BB4 /* LightingTo3.5 */;
+			targetProxy = F42AE4F81DEC019100E31BB4 /* PBXContainerItemProxy */;
+		};
+		F42AE5041DEC019100E31BB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F42AE4E21DEC019000E31BB4 /* LightingTo3.5 */;
+			targetProxy = F42AE5031DEC019100E31BB4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F42AE4EA1DEC019000E31BB4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F42AE4EB1DEC019000E31BB4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F42AE4EF1DEC019000E31BB4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F42AE4F01DEC019000E31BB4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F42AE5091DEC019100E31BB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F42AE50A1DEC019100E31BB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F42AE50C1DEC019100E31BB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H2VAN67H99;
+				INFOPLIST_FILE = LightingTo3.5/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F42AE50D1DEC019100E31BB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H2VAN67H99;
+				INFOPLIST_FILE = LightingTo3.5/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		F42AE50F1DEC019100E31BB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = H2VAN67H99;
+				INFOPLIST_FILE = LightingTo3.5Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LightingTo3.5.app/LightingTo3.5";
+			};
+			name = Debug;
+		};
+		F42AE5101DEC019100E31BB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = H2VAN67H99;
+				INFOPLIST_FILE = LightingTo3.5Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LightingTo3.5.app/LightingTo3.5";
+			};
+			name = Release;
+		};
+		F42AE5121DEC019100E31BB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = H2VAN67H99;
+				INFOPLIST_FILE = LightingTo3.5UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = LightingTo3.5;
+			};
+			name = Debug;
+		};
+		F42AE5131DEC019100E31BB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = H2VAN67H99;
+				INFOPLIST_FILE = LightingTo3.5UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = LightingTo3.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F42AE4DE1DEC019000E31BB4 /* Build configuration list for PBXProject "LightingTo3.5" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F42AE5091DEC019100E31BB4 /* Debug */,
+				F42AE50A1DEC019100E31BB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F42AE50B1DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F42AE50C1DEC019100E31BB4 /* Debug */,
+				F42AE50D1DEC019100E31BB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F42AE50E1DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F42AE50F1DEC019100E31BB4 /* Debug */,
+				F42AE5101DEC019100E31BB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F42AE5111DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F42AE5121DEC019100E31BB4 /* Debug */,
+				F42AE5131DEC019100E31BB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F42AE4DB1DEC019000E31BB4 /* Project object */;
+}
