@@ -148,6 +148,20 @@ class CLEAProtocol: NSObject, StreamDelegate {
         case Stream.Event.hasBytesAvailable:
             log(message: "\(aStream) stream has data", obj: self)
             
+            // 收到硬件的数据会回调此方法?
+            objc_sync_enter(self)
+            // 处理接收到的数据
+            parseResponse()
+            
+            // 为什么这里又要发送指令(数据)
+            sendRequest()
+            
+            if waitingResponseFor == nil {
+                // TODO: 发送通告，状态改变
+            }
+            
+            objc_sync_exit(self)
+            
         case Stream.Event.hasSpaceAvailable:
             log(message: "\(aStream) stream has space", obj: self)
             
@@ -182,6 +196,78 @@ class CLEAProtocol: NSObject, StreamDelegate {
     private var retries = 0
     // 超时定时器?
     private var toutTimer: Timer?
+    
+    // MARK: 实作接收硬件数据的方法
+    private func parseResponse() -> Bool {
+        var ret = false
+        
+        var dataPacket = [UInt8](repeating: 0, count: 128)
+        
+        if let cnt = clEASession?.inputStream?.read(&dataPacket, maxLength: dataPacket.count) {
+            // 打印接收到的数据前三个字节？
+            log(message: "<<<<< packet sz \(cnt) packet tag \(dataPacket[0]) data \(dataPacket[1]) \(dataPacket[2]) \(dataPacket[3])...", obj: self)
+            
+            if cnt >= 2 {
+                // 如果接收到的数据大于等于2bytes,再判断是哪条指令
+                
+                switch dataPacket[0] {
+                    
+                case CLEAProtocol.STATUS_TAG:
+                    if waitingResponseFor != nil && (
+                        waitingResponseFor![0] == CLEAProtocol.STATUS_TAG ||
+                        waitingResponseFor![0] == CLEAProtocol.UPDATE_FW_TAG ||
+                        waitingResponseFor![0] == CLEAProtocol.FLASH_FW_BLK_TAG) {
+                        
+                        // 如果waitingResponseFor不为空,并且是STATUS_TAG、UPDATE_FW_TAG、FLASH_FW_BLK_TAG三种状态中的一种,要将waitingResponseFor置空?
+                        waitingResponseFor = nil
+                        stopTimeOutTimer()
+                    }
+                    
+                    // TODO: 设置状态,调用CLEADevice的setStatus方法?
+                    
+                    ret = true
+                    
+                case CLEAProtocol.READ_TAG:
+                    if waitingResponseFor != nil && (
+                        waitingResponseFor![0] == CLEAProtocol.READ_TAG ||
+                        waitingResponseFor![0] == CLEAProtocol.WRITE_TAG) {
+                        
+                        // 如果waitingResponseFor不为空,并且是READ_TAG、WRITE_TAG两种状态中的一种,要将waitingResponseFor置空?
+                        waitingResponseFor = nil
+                        stopTimeOutTimer()
+                    }
+                    
+                    if cnt >= 4 && cnt >= 4 + Int(dataPacket[3]) {
+                        
+                        // 如果cnt大于等于4,要拿到数据,调用CLEADevice的setRegister方法？有什么用？
+                        let page = UInt8(dataPacket[1])
+                        let reg  = UInt8(dataPacket[2])
+                        let vcnt = Int(dataPacket[3])
+                        
+                        for i in 0..<vcnt {
+                            // TODO: 要调用CLEADevice的setRegister?
+                            log(message: "\(page) \(reg) \(vcnt) \(i)", obj: self)
+                        }
+                        ret = true
+                    } else {
+                        // 如果cnt数据bytes少于4,表示是不完整的
+                        log(message: "Incomplete response", obj: self)
+                    }
+                    
+                default:
+                    // 除了STATUS_TAG、READ_TAG，其他都是无效的响应?
+                    log(message: "Invalid response: unsupported tag \(dataPacket[0])", obj: self)
+                }
+            } else {
+                // 如果cnt数据bytes少于2,表示是无效的响应
+                log(message: "Invalid response: byte cnt \(cnt)", obj: self)
+            }
+        } else {
+            // 如果cnt为nil,表示根本没有传输通道？
+            log(message: "No connection channel to EA", obj: self)
+        }
+        return ret
+    }
     
     // MARK: 实作发送数据给硬件的方法
     private func sendRequest() {
@@ -278,7 +364,7 @@ class CLEAProtocol: NSObject, StreamDelegate {
                 
                 sendRequest()
             } else {
-                // TODO:重新设置状态?
+                // TODO: 重新设置状态，调用CLEADevice的setStatus方法?
             }
         } else {
             // waitingResponseFor是空,没有数据需要重新发送?
