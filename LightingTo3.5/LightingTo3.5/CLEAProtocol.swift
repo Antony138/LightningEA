@@ -230,6 +230,68 @@ class CLEAProtocol: NSObject, StreamDelegate {
         objc_sync_exit(self)
     }
     
+    // MARK: Command-引导启动?
+    // 请求升级前要先发一条这样的指令,"重启进bootloader，擦除application的flash，准备接收接下来的数据"?
+    func requestFwBoot() {
+        log(message: "boot FW request", obj: self)
+        
+        let dataPacket: [UInt8] = [CLEAProtocol.BOOT_FW_TAG]
+        
+        objc_sync_enter(self)
+        dataPackets.queue(data: dataPacket)
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
+    // MARK: Command-取消升级
+    func requestFwUpdateCancel() {
+        log(message: "cancel FW update request", obj: self)
+        
+        let dataPacket: [UInt8] = [CLEAProtocol.CANCEL_TAG]
+        
+        objc_sync_enter(self)
+        dataPackets.queue(data: dataPacket)
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
+    // MARK:注册"写"数据?(注册了才能写入数据?还是这是另一个写入数据的指令?)
+    // 好像这个接口方法都没有被用到
+    func requestRegistersWrite(register: UInt8, values: [UInt8], page: UInt8 = 0) {
+        log(message: "page \(page) reg \(register) val \(values[0])", obj: self)
+        
+        // values是需要写的数据？
+        var dataPacket: [UInt8] = [CLEAProtocol.WRITE_TAG, page, register, UInt8(values.count)]
+        dataPacket += values
+        
+        objc_sync_enter(self)
+        dataPackets.queue(data: dataPacket)
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
+    // 这个又是干嘛的?都没有被用到
+    func requestRegisterWrite(register: UInt8, value: UInt8, page: UInt8 = 0) {
+        requestRegistersWrite(register: register, values: [value], page: page)
+    }
+    
+    
+    func requestRegistersRead(register: UInt8, count: UInt8, page: UInt8 = 0) {
+        log(message: "page \(page) reg \(register) cnt \(count)", obj: self)
+        
+        let dataPacket: [UInt8] = [CLEAProtocol.READ_TAG, page, register, count]
+        
+        objc_sync_enter(self)
+        dataPackets.queue(data: dataPacket)
+        sendRequest()
+        objc_sync_exit(self)
+    }
+    
+    // MARK:注册"读"数据? 这个方法有被其他类调用
+    func requestRegisterRead(register: UInt8, page: UInt8 = 0) {
+        requestRegistersRead(register: register, count: 1, page: page)
+    }
+    
     
     // MARK:- 私有部分
     // 协议字符串
@@ -327,6 +389,7 @@ class CLEAProtocol: NSObject, StreamDelegate {
                 if canSend && waitingResponseFor == nil {
                     // waitingResponseFor为空才能发送?
                     
+                    // dequeue方法,是删除数组中的第一个元素？
                     if let dataPacket = dataPackets.dequeue() {
                         log(message: ">>>>>  packet tag \(dataPacket[0]) packet sz \(dataPacket.count)", obj: self)
                         
