@@ -297,7 +297,7 @@ class CLEAProtocol: NSObject, StreamDelegate {
     
     // MARK:- 私有部分
     // 协议字符串
-    private let eaProtocolString: String = ""
+    private let eaProtocolString: String
     // EASession对象
     private var clEASession: EASession?
     // 这是一个类实例?
@@ -308,6 +308,11 @@ class CLEAProtocol: NSObject, StreamDelegate {
     private var retries = 0
     // 超时定时器?
     private var toutTimer: Timer?
+    
+    // 覆盖初始化方法,初始化该类时,就获取协议字符串(com.fengeek.f002)
+    private override init() {
+        eaProtocolString = (Bundle.main.infoDictionary?["UISupportedExternalAccessoryProtocols"] as! [String])[0]
+    }
     
     // MARK: 实作接收硬件数据的方法
     private func parseResponse() -> Bool {
