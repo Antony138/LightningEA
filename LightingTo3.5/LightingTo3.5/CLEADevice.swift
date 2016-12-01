@@ -44,7 +44,16 @@ class CLEADevice: NSObject {
     
     static let PollingTimeInterval = 2.0
     
+    // MARK: 单例
     static private var sharedInstance: CLEADevice?
+    
+    class func shared() -> CLEADevice {
+        if sharedInstance == nil {
+            sharedInstance = CLEADevice()
+        }
+        return sharedInstance!
+    }
+    
     
     
 }
