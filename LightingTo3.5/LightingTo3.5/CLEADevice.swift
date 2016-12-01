@@ -163,7 +163,30 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     
     // MARK: 监测到有Lighting硬件断开后的回调方法
     @objc private func accessoryDisconnected(notification: NSNotification) {
-    
+        
+        // Get EA object
+        if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
+            log(message: "\(ea)", obj: self)
+            
+            if eaSupportsCLProtocol(ea: ea) {
+                log(message: "CL EA disconnected!", obj: self)
+                
+                // 关闭传输通道, 置空对象
+                closeConnection()
+                connectedAccessory = nil
+            }
+            else {
+                log(message: "**** Disconnected EA does not support CL protocol", obj: self)
+                
+                if quirkAccessory?.connectionID == ea.connectionID {
+                    log(message: "**** Quirk EA disconnected", obj: self)
+                    quirkAccessory = nil
+                }
+            }
+        }
+        else {
+            log(message: "**** Non-EA notification?!", obj: self)
+        }
     }
     
     // MARK: 打开传输通道
