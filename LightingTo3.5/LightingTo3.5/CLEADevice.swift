@@ -64,8 +64,30 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return false
     }
     
+    func connect() {
+        log(message: "*** START EA connection monitoring ***", obj: self)
+        
+        // 监听硬件连接
+        
+        // 不能用类似OC的block回调?
+//        let mainQueue = OperationQueue.main
+//        NotificationCenter.default.addObserver(forName: NSNotification.Name.EAAccessoryDidConnect, object: nil, queue: mainQueue) { (note) in
+//        }
+        NotificationCenter.default.addObserver(self, selector: #selector(CLEADevice.accessoryConnected(notification:)), name: NSNotification.Name.EAAccessoryDidConnect, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(CLEADevice.accessoryDisconnected(notification:)), name: NSNotification.Name.EAAccessoryDidDisconnect, object: nil)
+        
+        EAAccessoryManager.shared().registerForLocalNotifications()
+        
+        if eaDevConnected {
+            openConnection()
+        }
+    }
+    
     // MARK:- 私有部分
     private var connectedAccessory: EAAccessory?
+    
+    private var quirkAccessory: EAAccessory?
     
     // MARK: 获取设备
     private func getEA() -> EAAccessory? {
@@ -89,6 +111,69 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
             }
         }
         return false
+    }
+    
+    // MARK: 监测到有Lighting硬件连接后的回调方法
+    @objc private func accessoryConnected(notification: NSNotification) {
+        
+        // Get EA object
+        if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
+            log(message: "\(ea)", obj: self)
+            
+            if eaSupportsCLProtocol(ea: ea) {
+                if connectedAccessory != nil {
+                    // 如果有新硬件连接,但是connectedAccessory是有值的(表示有旧硬件), 要先将旧硬件的传输通道先关闭?
+                    log(message: "*** New EA connected but \(connectedAccessory!.name) was not disconnected?!", obj: self)
+                    
+                    closeConnection()
+                }
+                
+                // 有我们的硬件连接了
+                log(message: "CL EA connected", obj: self)
+                ea.delegate = self
+                
+                connectedAccessory = ea
+                
+                openConnection()
+            }
+            else {
+                // 不遵守协议的硬件(不是我们的硬件)
+                log(message: "Connected EA does not support CL protocol", obj: self)
+                
+                // 这里究竟是做一种什么防呆?
+                if let ca = connectedAccessory {
+                    if ca.name == ea.name || ca.manufacturer == ea.manufacturer {
+                        log(message: "*** Quirk EA is used to update invalid info", obj: self)
+                        
+                        ea.delegate = self
+                        quirkAccessory = ea
+                        
+//                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CLEADevice.HwStateChangedNotification), object: self)
+                        // 确认: 是否一定要上面的rawValue:
+                        NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
+                    }
+                }
+            
+            }
+        }
+        else {
+            log(message: "**** Non-EA notification", obj: self)
+        }
+    }
+    
+    // MARK: 监测到有Lighting硬件断开后的回调方法
+    @objc private func accessoryDisconnected(notification: NSNotification) {
+    
+    }
+    
+    // MARK: 打开传输通道
+    private func openConnection() {
+    
+    }
+    
+    // MARK: 关闭传输通道
+    private func closeConnection() {
+    
     }
     
 }
