@@ -141,6 +141,14 @@ class CLEAProtocol: NSObject, StreamDelegate {
         return true
     }
     
+    // MARK: 查询是否为"等待状态"?(判断waitingResponseFor是否有数据)
+    func waitingForResponse() -> Bool {
+        objc_sync_enter(self)
+        let state = (waitingResponseFor != nil)
+        objc_sync_exit(self)
+        return state
+    }
+    
     // MARK: StreamDelegate
     func stream(_ aStream: Stream, handle eventCode: Stream.Event) {
         switch eventCode {
@@ -184,7 +192,7 @@ class CLEAProtocol: NSObject, StreamDelegate {
         }
     }
     
-    // MARK:- Commands(指令部分)
+    // MARK:- Commands(指令部分:9条)
     // MARK: Command-查询状态
     func requestStatusUpdate() {
         log(message: "status request", obj: self)
