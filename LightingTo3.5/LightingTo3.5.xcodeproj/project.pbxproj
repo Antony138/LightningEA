@@ -16,6 +16,7 @@
 		F42AE5071DEC019100E31BB4 /* LightingTo3_5UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE5061DEC019100E31BB4 /* LightingTo3_5UITests.swift */; };
 		F42AE5151DEC01F300E31BB4 /* stm8l10x_fw.s19 in Resources */ = {isa = PBXBuildFile; fileRef = F42AE5141DEC01F300E31BB4 /* stm8l10x_fw.s19 */; };
 		F42AE5181DEC065000E31BB4 /* CLEAProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */; };
+		F42AE51A1DEFD65300E31BB4 /* CLEADevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE5191DEFD65300E31BB4 /* CLEADevice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		F42AE5081DEC019100E31BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F42AE5141DEC01F300E31BB4 /* stm8l10x_fw.s19 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stm8l10x_fw.s19; sourceTree = "<group>"; };
 		F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLEAProtocol.swift; sourceTree = "<group>"; };
+		F42AE5191DEFD65300E31BB4 /* CLEADevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLEADevice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				F42AE5161DEC01FD00E31BB4 /* Fw */,
 				F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */,
 				F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */,
+				F42AE5191DEFD65300E31BB4 /* CLEADevice.swift */,
 				F42AE4E81DEC019000E31BB4 /* ViewController.swift */,
 				F42AE4EA1DEC019000E31BB4 /* Main.storyboard */,
 				F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */,
@@ -277,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F42AE51A1DEFD65300E31BB4 /* CLEADevice.swift in Sources */,
 				F42AE4E91DEC019000E31BB4 /* ViewController.swift in Sources */,
 				F42AE5181DEC065000E31BB4 /* CLEAProtocol.swift in Sources */,
 				F42AE4E71DEC019000E31BB4 /* AppDelegate.swift in Sources */,
@@ -530,6 +534,7 @@
 				F42AE50D1DEC019100E31BB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F42AE50E1DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5Tests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +543,7 @@
 				F42AE5101DEC019100E31BB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F42AE5111DEC019100E31BB4 /* Build configuration list for PBXNativeTarget "LightingTo3.5UITests" */ = {
 			isa = XCConfigurationList;
@@ -546,6 +552,7 @@
 				F42AE5131DEC019100E31BB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
