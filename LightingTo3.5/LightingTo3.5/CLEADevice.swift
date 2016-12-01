@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ExternalAccessory
 
 // 协议(是CLEAProtocol用到的,用于回调什么?)
 protocol Device {
@@ -14,7 +15,7 @@ protocol Device {
     func setStatus(status: [UInt8], count: Int)
 }
 
-class CLEADevice: NSObject {
+class CLEADevice: NSObject, EAAccessoryDelegate {
     
     // MARK:- 属性
     static let HwStateChangedNotification = "HwStateChanged"
@@ -54,6 +55,40 @@ class CLEADevice: NSObject {
         return sharedInstance!
     }
     
+    // MARK: 判断硬件是否是连接状态(并不是接口方法,可否放私有部分?)
+    // 是否可以弄成method? 一定要弄成property吗?
+    var eaDevConnected: Bool {
+        if let ea = getEA() {
+            return ea.isConnected
+        }
+        return false
+    }
     
+    // MARK:- 私有部分
+    private var connectedAccessory: EAAccessory?
+    
+    // MARK: 获取设备
+    private func getEA() -> EAAccessory? {
+        if connectedAccessory == nil {
+            let eam = EAAccessoryManager.shared()
+            for ea in eam.connectedAccessories {
+                if eaSupportsCLProtocol(ea: ea) {
+                    ea.delegate = self
+                    connectedAccessory = ea
+                }
+            }
+        }
+        return connectedAccessory
+    }
+    
+    // MARK: 判断是否支持协议(调用CLEAProtocol的接口方法)
+    private func eaSupportsCLProtocol(ea: EAAccessory) -> Bool {
+        for proto in ea.protocolStrings {
+            if CLEAProtocol.shared().supportsProtocol(protocolName: proto) {
+                return true
+            }
+        }
+        return false
+    }
     
 }
