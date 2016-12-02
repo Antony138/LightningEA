@@ -214,6 +214,18 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return CLEAProtocol.shared().waitingForResponse()
     }
     
+    // MARK: getRegister(有什么用?)
+    func getRegister(register: UInt8, page: UInt8) -> UInt8 {
+        
+        assert(Int(page) < regCache.count, "Invalid register page \(page) - must be less than \(regCache.count)")
+        
+        objc_sync_enter(self)
+        // 这是一个数组, 还是字典?
+        let val = regCache[Int(page)][Int(register)]
+        objc_sync_exit(self)
+        
+        return val!
+    }
     
     
     // MARK:- 私有部分
