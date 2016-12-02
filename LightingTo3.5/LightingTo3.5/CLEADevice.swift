@@ -195,7 +195,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         updateHwStateRegsCache()
     }
 
-    // MARK:- 重置各种状态(调用了CLEAProtocol的reset()方法)
+    // MARK: 重置各种状态(调用了CLEAProtocol的reset()方法)
     func reset() {
         objc_sync_enter(self)
         // repeating,repeatElement都可以?
@@ -208,6 +208,12 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         
         log(message: "RESET", obj: self)
     }
+    
+    // MARK: 判断,是否繁忙/是否有正在发送的数据
+    func busy() -> Bool {
+        return CLEAProtocol.shared().waitingForResponse()
+    }
+    
     
     
     // MARK:- 私有部分
