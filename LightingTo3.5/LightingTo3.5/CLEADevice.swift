@@ -185,6 +185,16 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     var hwStateRegsPage: UInt8?
     var hwStateRegsCnt: UInt8?
     
+    // MARK:- 这部分不是接口方法,也不是私有方法?
+    // MARK: 读取硬件状态?(发送了指令)
+    func readHwStatusPage(page: UInt8, count: UInt8) {
+        hwStateRegsPage = page
+        hwStateRegsCnt = count
+        
+        // 发送指令requestRegistersRead
+        updateHwStateRegsCache()
+    }
+
     
     // MARK:- 私有部分
     private var connectedAccessory: EAAccessory?
@@ -219,7 +229,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
                     if !eaSupportsCLProtocol(ea: ea) && connEA.name == ea.name && connEA.manufacturer == ea.manufacturer {
                         log(message: "**** Quirk EA \(ea.name) is used to update invalid info", obj: self)
                         
-                        ea.delegate = self
+                        ea.delegate    = self
                         quirkAccessory = ea
                     }
                 }
@@ -322,6 +332,16 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     // MARK: 关闭传输通道
     private func closeConnection() {
     
+    }
+    
+    // 发一条指令给硬件.是干嘛用的的?
+    private func updateHwStateRegsCache() {
+        if hwStateRegsCnt != nil && hwStateRegsPage != nil {
+            for i in 0..<hwStateRegsCnt! {
+                // 调用接口方法,发送指令requestRegistersRead
+                CLEAProtocol.shared().requestRegisterRead(register: i, page: hwStateRegsPage!)
+            }
+        }
     }
     
 }
