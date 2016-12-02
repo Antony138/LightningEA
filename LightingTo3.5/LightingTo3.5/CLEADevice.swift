@@ -227,6 +227,59 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return val!
     }
     
+    // MARK: 实现Device协议的方法setRegister
+    // 可以将参数page直接赋值?(那调用方法时传参,不会直接覆盖掉这个0吗?那这里赋值还有什么意义?)
+    func setRegister(register: UInt8, value: UInt8, page: UInt8 = 0) {
+        objc_sync_enter(self)
+        regCache[Int(page)][Int(register)] = value
+        objc_sync_exit(self)
+    }
+    
+    func updateDeviceStatus() {
+        if eaDevConnected {
+            // 如果时连接状态
+            
+            
+        }
+    }
+    
+    // MARK: 实现Device协议的方法setStatus
+    func setStatus(status: [UInt8], count: Int) {
+        
+        var sts = status[1]
+        
+        log(message: " status \(sts) cnt \(count)", obj: self)
+        
+        switch sts {
+        case CLEADevice.STATUS_WAITING_FW_DATA:
+            if fwUpdateEnabled {
+                if fwBlkToFlash < 0 {
+                    // 未烧录状态?
+                    fwBlkToFlash = fwBlock.count
+                }
+                
+                fwBlkToFlash -= 1
+                
+                // TODO: 确认这种for循环是否可用
+                var j: Int
+                for i in stride(from: fwBlkToFlash, through: 0, by: -1) {
+                    if fwBlock[i] {
+                        j = i
+                        break
+                    }
+                }
+                fwBlkToFlash = j
+                
+
+            }
+        default:
+            <#code#>
+        }
+
+        
+    }
+    
+    
     
     // MARK:- 私有部分
     private var connectedAccessory: EAAccessory?
@@ -246,6 +299,9 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     private var fwBlkToFlash = -1 // if >= 0 the fw flashing is in progress
     
     private var fwUpdateEnabled = false
+    
+    // 数组,存若干Bool值
+    private var fwBlock = [Bool](repeating: false, count: FW_SIZE / FW_BLOCK_SIZE)
     
     
     // MARK: 获取设备
