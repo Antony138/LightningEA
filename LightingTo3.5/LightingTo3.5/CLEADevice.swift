@@ -212,7 +212,20 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     }
     
     private func getQuirkEA() -> EAAccessory? {
-    
+        if quirkAccessory == nil {
+            if let connEA = getEA() {
+                let eam = EAAccessoryManager.shared()
+                for ea in eam.connectedAccessories {
+                    if !eaSupportsCLProtocol(ea: ea) && connEA.name == ea.name && connEA.manufacturer == ea.manufacturer {
+                        log(message: "**** Quirk EA \(ea.name) is used to update invalid info", obj: self)
+                        
+                        ea.delegate = self
+                        quirkAccessory = ea
+                    }
+                }
+            }
+        }
+        return quirkAccessory
     }
     
     // MARK: 判断是否支持协议(调用CLEAProtocol的接口方法)
