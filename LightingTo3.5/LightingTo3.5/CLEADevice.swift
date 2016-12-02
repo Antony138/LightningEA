@@ -195,6 +195,20 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         updateHwStateRegsCache()
     }
 
+    // MARK:- 重置各种状态(调用了CLEAProtocol的reset()方法)
+    func reset() {
+        objc_sync_enter(self)
+        // repeating,repeatElement都可以?
+        regCache = [[Int : UInt8]](repeatElement([:], count: CLEADevice.PAGE_COUNT))
+        fwBlkToFlash = -1
+        fwUpdateEnabled = false
+        objc_sync_exit(self)
+        
+        CLEAProtocol.shared().reset()
+        
+        log(message: "RESET", obj: self)
+    }
+    
     
     // MARK:- 私有部分
     private var connectedAccessory: EAAccessory?
@@ -206,6 +220,15 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     
     // 固件数据(等式后面的表示容量和初始化值？)
     private var fwData = [UInt8](repeating: 0, count: FW_SIZE)
+    
+    // 这是一个数组,数组里面存的是字典？
+    private var regCache = [[Int : UInt8]](repeating: [:], count: PAGE_COUNT)
+    
+    // 烧录的进度
+    private var fwBlkToFlash = -1 // if >= 0 the fw flashing is in progress
+    
+    private var fwUpdateEnabled = false
+    
     
     // MARK: 获取设备
     private func getEA() -> EAAccessory? {
