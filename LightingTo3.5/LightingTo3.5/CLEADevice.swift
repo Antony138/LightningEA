@@ -20,6 +20,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     // MARK:- 属性
     static let HwStateChangedNotification = "HwStateChanged"
     static let BusyTimeout = 10
+    static let NA = "N/A"
     
     static let PAGE_COUNT         = 256
     static let DEV_FLASH_ADDRESS  = 0x8000
@@ -102,10 +103,99 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         quirkAccessory = nil
     }
     
+    // MARK:- 其他属性
+    var name: String {
+        if let ea = getEA() {
+            if ea.isConnected {
+                return ea.name
+            }
+        }
+        return CLEADevice.NA
+    }
+    
+    var manufacturer: String {
+        if let ea = getEA() {
+            if ea.isConnected {
+                return ea.manufacturer
+            }
+        }
+        return CLEADevice.NA
+    }
+    
+    var model: String {
+        if let ea = getEA() {
+            if ea.isConnected {
+                if let qea = getQuirkEA() {
+                    // 有QuirkEA就拿QuirkEA的,为什么不直接拿getEA的?
+                    return qea.modelNumber
+                }
+                else {
+                    return ea.modelNumber
+                }
+            }
+        }
+        return CLEADevice.NA
+    }
+    
+    var serialNumber: String {
+        if let ea = getEA() {
+            if ea.isConnected {
+                return ea.serialNumber
+            }
+        }
+        return CLEADevice.NA
+    }
+    
+    var hwRevision: String {
+        if let ea = getEA() {
+            if ea.isConnected {
+                return ea.hardwareRevision
+            }
+        }
+        return CLEADevice.NA
+    }
+    
+    var fwRevision: String {
+        if let ea = getEA() {
+            if ea.isConnected {
+                if let qea = getQuirkEA() {
+                    return qea.firmwareRevision
+                }
+                else {
+                    return ea.firmwareRevision
+                }
+            }
+        }
+        return CLEADevice.NA
+    }
+    
+    var fwVersion: String {
+        // 判断有值了, 就可以直接用感叹号解包
+        return (fwVer == nil) ? CLEADevice.NA : fwVer!
+    }
+    
+    var loadedFWVersion: String {
+        // 获取位置/地址?（什么位置/地址）
+        let fwLoc = CLEADevice.FW_VERSION_ADDRESS - CLEADevice.DEV_FLASH_ADDRESS
+        
+        return "\(fwData[fwLoc]).\(fwData[fwLoc + 1]).\(fwData[fwLoc + 2])"
+    }
+    
+    // 这两个属性表示？
+    var hwStateRegsPage: UInt8?
+    var hwStateRegsCnt: UInt8?
+    
+    
     // MARK:- 私有部分
     private var connectedAccessory: EAAccessory?
     
     private var quirkAccessory: EAAccessory?
+    
+    // 这个表示固件的什么?(好像不是版本,因为是running才赋值的)
+    private var fwVer: String?
+    
+    // 固件数据(等式后面的表示容量和初始化值？)
+    private var fwData = [UInt8](repeating: 0, count: FW_SIZE)
     
     // MARK: 获取设备
     private func getEA() -> EAAccessory? {
@@ -119,6 +209,10 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
             }
         }
         return connectedAccessory
+    }
+    
+    private func getQuirkEA() -> EAAccessory? {
+    
     }
     
     // MARK: 判断是否支持协议(调用CLEAProtocol的接口方法)
