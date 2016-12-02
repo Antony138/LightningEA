@@ -64,6 +64,8 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return false
     }
     
+    // MARK:- 接口方法
+    // MARK: (监测)连接硬件
     func connect() {
         log(message: "*** START EA connection monitoring ***", obj: self)
         
@@ -82,6 +84,22 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         if eaDevConnected {
             openConnection()
         }
+    }
+    
+    // MARK: 断开硬件连接
+    func disconnect() {
+        log(message: "*** STOP EA connection monitoring ***", obj: self)
+        
+        // 取消监听通告
+        EAAccessoryManager.shared().unregisterForLocalNotifications()
+        
+        NotificationCenter.default.removeObserver(self)
+        
+        closeConnection()
+        
+        connectedAccessory = nil
+        
+        quirkAccessory = nil
     }
     
     // MARK:- 私有部分
