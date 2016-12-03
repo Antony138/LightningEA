@@ -261,22 +261,87 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
                 fwBlkToFlash -= 1
                 
                 // TODO: 确认这种for循环是否可用
-                var j: Int
+                var j: Int?
                 for i in stride(from: fwBlkToFlash, through: 0, by: -1) {
+                    j = i
                     if fwBlock[i] {
-                        j = i
                         break
                     }
                 }
-                fwBlkToFlash = j
+                fwBlkToFlash = j!
                 
-
+                if fwBlkToFlash < 0 {
+                    // FW has been flashed, booting(准备要升级了?要进入boot状态?)
+                    fwUpdateEnabled = false
+                    
+                    sts = CLEADevice.STATUS_WAITING_RESPONSE
+                    
+                    // 发送指令, 重启进bootloader?
+                    CLEAProtocol.shared().requestFwBoot()
+                    
+                    Timer.scheduledTimer(timeInterval: CLEADevice.PollingTimeInterval,
+                                         target: self,
+                                         selector: #selector(CLEADevice.refreshHwState),
+                                         userInfo: nil,
+                                         repeats: false)
+                }
+                else {
+                    NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
+                    
+                    // 发送指令烧录固件
+                    CLEAProtocol.shared().requestFwBlockFlash(blkNum: UInt8(fwBlkToFlash), fwData: fwData)
+                }
             }
+            
+        case CLEADevice.STATUS_FAILED:
+            
+            if fwUpdateEnabled && fwBlkToFlash > 0  {
+                log(message: "**** failed to flash FW block!", obj: self)
+                
+                failCnt += 1
+                
+                if failCnt > 3 {
+                    // 失败次数大于3次
+                    fwUpdateEnabled = false
+                    
+                    fwBlkToFlash = -1
+                    
+                    // 发送指令取消升级
+                    CLEAProtocol.shared().requestFwUpdateCancel()
+                    
+                    Timer.scheduledTimer(timeInterval: CLEADevice.PollingTimeInterval,
+                                         target: self,
+                                         selector: #selector(CLEADevice.refreshHwState),
+                                         userInfo: nil,
+                                         repeats: false)
+                }
+                else {
+                    fwBlkToFlash += 1
+                    
+                    // 查询硬件状态
+                    CLEAProtocol.shared().requestStatusUpdate()
+                }
+            }
+            else {
+                log(message: "**** invalid request?!", obj: self)
+            }
+            
+        case CLEADevice.STATUS_FW_IS_RUNNING:
+            if count >= 5 {
+                fwVer = "\(status[2]).\(status[3]).\(status[4])"
+            }
+            
+        case CLEADevice.STATUS_NOT_RESPONDING:
+            // 发送指令, 重置(rest)
+            CLEAProtocol.shared().reset()
+            
         default:
-            <#code#>
+            break
         }
-
         
+        objc_sync_enter(self)
+        devStatus = sts
+        objc_sync_exit(self)
     }
     
     
@@ -303,6 +368,10 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     // 数组,存若干Bool值
     private var fwBlock = [Bool](repeating: false, count: FW_SIZE / FW_BLOCK_SIZE)
     
+    // 失败次数计数?
+    private var failCnt = 0
+    
+    private var devStatus: UInt8 = CLEADevice.STATUS_NOT_CONNECTED
     
     // MARK: 获取设备
     private func getEA() -> EAAccessory? {
@@ -439,6 +508,11 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
                 CLEAProtocol.shared().requestRegisterRead(register: i, page: hwStateRegsPage!)
             }
         }
+    }
+    
+    // 升级过程中更新更新硬件状态?
+    @objc private func refreshHwState() {
+        updateDeviceStatus()
     }
     
 }
