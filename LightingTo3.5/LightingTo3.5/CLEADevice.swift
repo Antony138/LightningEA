@@ -133,6 +133,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         }
     }
     
+    // MARK: 更新固件
     func updateFw() {
         fwUpdateEnabled = true
         fwBlkToFlash = -1
@@ -563,7 +564,72 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     
     // 解析固件?
     private func parseS19Line(s: String) {
-        
+        if s.hasPrefix("S1") {
+            
+//            var i1   = s.startIndex.advancedBy(2)
+            var i1   = s.index(s.startIndex, offsetBy: 2)
+            
+//            var i2   = i1.advancedBy(2)
+            // 这个不就是对索引i1再向右移2吗?直接加2就可以可以了吧?(不能相加, 因为类型不一样)
+            // 确认是否是这样改
+            var i2 = s.index(i1, offsetBy: 2)
+            
+//            var r    = Range<String.CharacterView.Index>(start: i1, end: i2)
+            var r    = i1 ..< i2
+            
+            var tmp = s.substring(with: r)
+            
+            if var bcnt = Int(tmp, radix: 16) {
+                
+                if bcnt > 3 {
+                    bcnt -= 3
+                    i1  = i2
+                    i2  = s.index(i1, offsetBy: 4)
+                    r   = i1 ..< i2
+                    tmp = s.substring(with: r)
+                    
+                    if var addr = Int(tmp, radix: 16) {
+                        addr -= CLEADevice.DEV_FLASH_ADDRESS
+                        
+                        if addr < CLEADevice.FW_SIZE {
+                            
+                            for i in 0 ..< bcnt {
+                                i1  = i2
+                                i2  = s.index(i1, offsetBy: 2)
+                                r   = i1 ..< i2
+                                tmp = s.substring(with: r)
+                                
+                                if let d = UInt8(tmp, radix: 16) {
+                                    fwData[addr + i] = d
+                                }
+                                else {
+                                    log(message: "**** Invalid data in S19 line!", obj: self)
+                                }
+                            }
+                            
+                            let startBlk = addr / CLEADevice.FW_BLOCK_SIZE
+                            let endBlk = (addr + bcnt - 1) / CLEADevice.FW_BLOCK_SIZE
+                            
+                            for i in startBlk...endBlk {
+                                fwBlock[i] = true
+                            }
+                        }
+                        else {
+                            log(message: "**** Invalid address in S19 line!", obj: self)
+                        }
+                    }
+                    else {
+                        log(message: "**** Invalid address in S19 line!", obj: self)
+                    }
+                }
+                else {
+                    log(message: "**** Invalid S19 line size!", obj: self)
+                }
+            }
+            else {
+                log(message: "**** Invalid S19 line size field!", obj: self)
+            }
+        }
     }
     
 }
