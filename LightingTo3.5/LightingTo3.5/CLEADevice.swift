@@ -539,12 +539,33 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     
     // MARK: 打开传输通道
     private func openConnection() {
-    
+        let ea = getEA()!
+        
+        if CLEAProtocol.shared().openSession(ea: ea) {
+            log(message: "Open connection to EA", obj: self)
+            
+            reset()
+            
+            updateDeviceStatus()
+            
+            NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
+        }
+        else {
+            log(message: "Cannot open communication channel with EA", obj: self)
+        }
     }
     
     // MARK: 关闭传输通道
     private func closeConnection() {
-    
+        log(message: "Close connection to EA", obj: self)
+        
+        CLEAProtocol.shared().closeSession()
+        
+        updateDeviceStatus()
+        
+        reset()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
     }
     
     // 发一条指令给硬件.是干嘛用的的?
