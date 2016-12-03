@@ -103,6 +103,44 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         quirkAccessory = nil
     }
     
+    // MARK: 获取硬件状态
+    func getStatus() -> UInt8 {
+        objc_sync_enter(self)
+        // 初始化值为STATUS_NOT_CONNECTED
+        let currStatus = devStatus
+        objc_sync_exit(self)
+        
+        return currStatus
+    }
+    
+    // MARK: 获取烧录进度
+    func getFlashingBlkNum() -> Int {
+        return fwBlkToFlash
+    }
+    
+    // MARK: 加载(load)固件
+    func loadFw() throws {
+        // stm8l10x_fw是固件名, 后缀名s19
+        let fwPath = Bundle.main.path(forResource: "stm8l10x_fw", ofType: "s19")
+        
+        // 返回NSData对象吗？
+        let s19Data = try String(contentsOfFile: fwPath!, encoding: String.Encoding.utf8)
+        
+        let s19Lines = s19Data.components(separatedBy: "\n")
+        
+        for s in s19Lines {
+            parseS19Line(s: s)
+        }
+    }
+    
+    func updateFw() {
+        fwUpdateEnabled = true
+        fwBlkToFlash = -1
+        failCnt = 0
+        // 发送指令, 请求升级
+        CLEAProtocol.shared().requestFwUpdate()
+    }
+    
     // MARK:- 其他属性
     var name: String {
         if let ea = getEA() {
@@ -521,6 +559,11 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     // 升级过程中更新更新硬件状态?
     @objc private func refreshHwState() {
         updateDeviceStatus()
+    }
+    
+    // 解析固件?
+    private func parseS19Line(s: String) {
+        
     }
     
 }
