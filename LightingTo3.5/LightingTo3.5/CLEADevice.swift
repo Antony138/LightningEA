@@ -227,7 +227,23 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return val!
     }
     
-    // MARK: 实现Device协议的方法setRegister
+    // MARK: 更新状态
+    func updateDeviceStatus() {
+        if eaDevConnected {
+            // 如果时连接状态
+            setStatus(status: [0, CLEADevice.STATUS_WAITING_RESPONSE], count: 2)
+            
+            // 发送指令, 查询硬件状态?
+            CLEAProtocol.shared().requestStatusUpdate()
+        }
+        else {
+            // 处于没有连接的状态
+            setStatus(status: [0, CLEADevice.STATUS_NOT_CONNECTED], count: 2)
+        }
+    }
+    
+    // MARK:- protocol方法的实现?
+    // 实现Device协议的方法setRegister
     // 可以将参数page直接赋值?(那调用方法时传参,不会直接覆盖掉这个0吗?那这里赋值还有什么意义?)
     func setRegister(register: UInt8, value: UInt8, page: UInt8 = 0) {
         objc_sync_enter(self)
@@ -235,15 +251,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         objc_sync_exit(self)
     }
     
-    func updateDeviceStatus() {
-        if eaDevConnected {
-            // 如果时连接状态
-            
-            
-        }
-    }
-    
-    // MARK: 实现Device协议的方法setStatus
+    // 实现Device协议的方法setStatus
     func setStatus(status: [UInt8], count: Int) {
         
         var sts = status[1]
