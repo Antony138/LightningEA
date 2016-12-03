@@ -392,7 +392,6 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     }
     
     
-    
     // MARK:- 私有部分
     private var connectedAccessory: EAAccessory?
     

@@ -167,7 +167,8 @@ class CLEAProtocol: NSObject, StreamDelegate {
             sendRequest()
             
             if waitingResponseFor == nil {
-                // TODO: 发送通告，状态改变
+                // 发送通告，状态改变
+                NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
             }
             
             objc_sync_exit(self)
@@ -229,9 +230,9 @@ class CLEAProtocol: NSObject, StreamDelegate {
         var dataPacket: [UInt8] = [CLEAProtocol.FLASH_FW_BLK_TAG, blkNum]
         
         // TODO: 两个64要用CLEADevice.FW_BLOCK_SIZE代替
-        for i in 0..<64 {
+        for i in 0..<CLEADevice.FW_BLOCK_SIZE {
             // 组织数据(为什么不用dataPackets的queue了？)
-            dataPacket.append(fwData[Int(blkNum) * 64 + i])
+            dataPacket.append(fwData[Int(blkNum) * CLEADevice.FW_BLOCK_SIZE + i])
         }
         
         objc_sync_enter(self)
@@ -348,7 +349,8 @@ class CLEAProtocol: NSObject, StreamDelegate {
                         stopTimeOutTimer()
                     }
                     
-                    // TODO: 设置状态,调用CLEADevice的setStatus方法?
+                    // 设置状态,调用CLEADevice的setStatus方法
+                    CLEADevice.shared().setStatus(status: dataPacket, count: cnt)
                     
                     ret = true
                     
@@ -370,8 +372,8 @@ class CLEAProtocol: NSObject, StreamDelegate {
                         let vcnt = Int(dataPacket[3])
                         
                         for i in 0..<vcnt {
-                            // TODO: 要调用CLEADevice的setRegister?
-                            log(message: "\(page) \(reg) \(vcnt) \(i)", obj: self)
+                            // 要调用CLEADevice的setRegister
+                            CLEADevice.shared().setRegister(register: reg + UInt8(i), value: dataPacket[4 + i], page: page)
                         }
                         ret = true
                     } else {
@@ -490,7 +492,10 @@ class CLEAProtocol: NSObject, StreamDelegate {
                 
                 sendRequest()
             } else {
-                // TODO: 重新设置状态，调用CLEADevice的setStatus方法?
+                // 重新设置状态，调用CLEADevice的setStatus方法
+                CLEADevice.shared().setStatus(status: [0, CLEADevice.STATUS_NOT_RESPONDING], count: 2)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
             }
         } else {
             // waitingResponseFor是空,没有数据需要重新发送?
