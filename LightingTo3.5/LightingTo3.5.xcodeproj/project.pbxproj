@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F42AE4E71DEC019000E31BB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */; };
-		F42AE4E91DEC019000E31BB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE4E81DEC019000E31BB4 /* ViewController.swift */; };
+		F42AE4E91DEC019000E31BB4 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42AE4E81DEC019000E31BB4 /* DeviceViewController.swift */; };
 		F42AE4EC1DEC019000E31BB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42AE4EA1DEC019000E31BB4 /* Main.storyboard */; };
 		F42AE4EE1DEC019000E31BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */; };
 		F42AE4F11DEC019000E31BB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42AE4EF1DEC019000E31BB4 /* LaunchScreen.storyboard */; };
@@ -39,7 +39,7 @@
 /* Begin PBXFileReference section */
 		F42AE4E31DEC019000E31BB4 /* LightingTo3.5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightingTo3.5.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F42AE4E81DEC019000E31BB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F42AE4E81DEC019000E31BB4 /* DeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		F42AE4EB1DEC019000E31BB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F42AE4F01DEC019000E31BB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				F42AE4E61DEC019000E31BB4 /* AppDelegate.swift */,
 				F42AE5171DEC065000E31BB4 /* CLEAProtocol.swift */,
 				F42AE5191DEFD65300E31BB4 /* CLEADevice.swift */,
-				F42AE4E81DEC019000E31BB4 /* ViewController.swift */,
+				F42AE4E81DEC019000E31BB4 /* DeviceViewController.swift */,
 				F42AE4EA1DEC019000E31BB4 /* Main.storyboard */,
 				F42AE4ED1DEC019000E31BB4 /* Assets.xcassets */,
 				F42AE4EF1DEC019000E31BB4 /* LaunchScreen.storyboard */,
@@ -281,7 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F42AE51A1DEFD65300E31BB4 /* CLEADevice.swift in Sources */,
-				F42AE4E91DEC019000E31BB4 /* ViewController.swift in Sources */,
+				F42AE4E91DEC019000E31BB4 /* DeviceViewController.swift in Sources */,
 				F42AE5181DEC065000E31BB4 /* CLEAProtocol.swift in Sources */,
 				F42AE4E71DEC019000E31BB4 /* AppDelegate.swift in Sources */,
 			);
@@ -437,6 +437,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = H2VAN67H99;
 				INFOPLIST_FILE = LightingTo3.5/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -450,6 +451,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = H2VAN67H99;
 				INFOPLIST_FILE = LightingTo3.5/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spk.LightingTo3-5";
 				PRODUCT_NAME = "$(TARGET_NAME)";
