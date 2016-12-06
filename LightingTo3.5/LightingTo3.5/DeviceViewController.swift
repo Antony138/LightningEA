@@ -57,6 +57,10 @@ class DeviceViewController: UITableViewController {
             log(message: "EAAccessoryDidConnect", obj: self)
         })
         
+        self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 44.0, 0.0)
+        self.tableView.showsVerticalScrollIndicator = false
+
+        
     }
 
     override func didReceiveMemoryWarning() {

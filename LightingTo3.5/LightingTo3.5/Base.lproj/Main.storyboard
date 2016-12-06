@@ -59,17 +59,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cirrus Logic Headset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdi-pP-dZS" userLabel="Hw Name">
-                                                    <rect key="frame" x="253" y="11" width="161" height="21"/>
+                                                    <rect key="frame" x="245" y="11" width="161" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Pdi-pP-dZS" firstAttribute="trailing" secondItem="Ufk-uW-DaE" secondAttribute="trailingMargin" constant="8" id="Ah8-fn-iN2"/>
                                                 <constraint firstItem="t2l-pp-f5n" firstAttribute="centerY" secondItem="Ufk-uW-DaE" secondAttribute="centerY" id="Pj4-Ea-DYT"/>
                                                 <constraint firstItem="Pdi-pP-dZS" firstAttribute="centerY" secondItem="Ufk-uW-DaE" secondAttribute="centerY" id="Qz4-BU-Rx0"/>
                                                 <constraint firstItem="t2l-pp-f5n" firstAttribute="leading" secondItem="Ufk-uW-DaE" secondAttribute="leadingMargin" constant="8" id="Qzt-md-uJZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="Pdi-pP-dZS" secondAttribute="trailing" constant="8" id="cfb-VJ-885"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -87,7 +87,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cirrus Logic, Inc." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyv-RC-s4Q" userLabel="Hw Manufacturer">
-                                                    <rect key="frame" x="285.66666666666674" y="11" width="128.33333333333331" height="21"/>
+                                                    <rect key="frame" x="277.66666666666674" y="11" width="128.33333333333331" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -95,8 +95,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="flr-WI-1Qf" firstAttribute="centerY" secondItem="Y0J-8G-aNf" secondAttribute="centerY" id="I9z-RC-eaI"/>
-                                                <constraint firstItem="hyv-RC-s4Q" firstAttribute="trailing" secondItem="Y0J-8G-aNf" secondAttribute="trailingMargin" constant="8" id="JML-Sb-GrB"/>
                                                 <constraint firstItem="flr-WI-1Qf" firstAttribute="leading" secondItem="Y0J-8G-aNf" secondAttribute="leadingMargin" constant="8" id="ZbE-oD-QhF"/>
+                                                <constraint firstAttribute="trailing" secondItem="hyv-RC-s4Q" secondAttribute="trailing" constant="8" id="j0E-ap-pDZ"/>
                                                 <constraint firstItem="hyv-RC-s4Q" firstAttribute="centerY" secondItem="Y0J-8G-aNf" secondAttribute="centerY" id="wxq-5H-uYI"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -115,7 +115,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CS42L42" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ljk-cH-4Sh" userLabel="Hw Model">
-                                                    <rect key="frame" x="341.66666666666674" y="11" width="72.333333333333314" height="21"/>
+                                                    <rect key="frame" x="333.66666666666674" y="11" width="72.333333333333314" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -125,7 +125,7 @@
                                                 <constraint firstItem="kFD-Dw-ABe" firstAttribute="centerY" secondItem="dct-rc-o1I" secondAttribute="centerY" id="GY0-Qw-gfa"/>
                                                 <constraint firstItem="kFD-Dw-ABe" firstAttribute="leading" secondItem="dct-rc-o1I" secondAttribute="leadingMargin" constant="8" id="RIp-6M-X0T"/>
                                                 <constraint firstItem="Ljk-cH-4Sh" firstAttribute="centerY" secondItem="dct-rc-o1I" secondAttribute="centerY" id="gtb-Gx-Lqw"/>
-                                                <constraint firstItem="Ljk-cH-4Sh" firstAttribute="trailing" secondItem="dct-rc-o1I" secondAttribute="trailingMargin" constant="8" id="r9P-n7-hkE"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ljk-cH-4Sh" secondAttribute="trailing" constant="8" id="o0P-2y-rgm"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -143,7 +143,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234567890" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odD-t0-Naj" userLabel="Hw SerialN">
-                                                    <rect key="frame" x="314.66666666666674" y="11" width="99.333333333333314" height="21"/>
+                                                    <rect key="frame" x="306.66666666666674" y="11" width="99.333333333333314" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -151,9 +151,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="trJ-VF-5ek" firstAttribute="leading" secondItem="WmZ-UI-XUA" secondAttribute="leadingMargin" constant="8" id="9kQ-fk-UaV"/>
-                                                <constraint firstItem="odD-t0-Naj" firstAttribute="trailing" secondItem="WmZ-UI-XUA" secondAttribute="trailingMargin" constant="8" id="C3t-hl-gBB"/>
                                                 <constraint firstItem="odD-t0-Naj" firstAttribute="centerY" secondItem="WmZ-UI-XUA" secondAttribute="centerY" id="KFv-rB-igz"/>
                                                 <constraint firstItem="trJ-VF-5ek" firstAttribute="centerY" secondItem="WmZ-UI-XUA" secondAttribute="centerY" id="KkV-OG-GpD"/>
+                                                <constraint firstAttribute="trailing" secondItem="odD-t0-Naj" secondAttribute="trailing" constant="8" id="slO-cy-8fN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -198,14 +198,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBx-Gl-oeF" userLabel="Hw Revision">
-                                                    <rect key="frame" x="392" y="11" width="22" height="21"/>
+                                                    <rect key="frame" x="384" y="11" width="22" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="LBx-Gl-oeF" firstAttribute="trailing" secondItem="cXG-f6-GbH" secondAttribute="trailingMargin" constant="8" id="Jen-6c-KzN"/>
+                                                <constraint firstAttribute="trailing" secondItem="LBx-Gl-oeF" secondAttribute="trailing" constant="8" id="0Th-jj-3nD"/>
                                                 <constraint firstItem="qde-M6-gts" firstAttribute="leading" secondItem="cXG-f6-GbH" secondAttribute="leadingMargin" constant="8" id="mJ0-nd-mlY"/>
                                                 <constraint firstItem="qde-M6-gts" firstAttribute="centerY" secondItem="cXG-f6-GbH" secondAttribute="centerY" id="nWc-S4-5bj"/>
                                                 <constraint firstItem="LBx-Gl-oeF" firstAttribute="centerY" secondItem="cXG-f6-GbH" secondAttribute="centerY" id="xth-UW-68Y"/>
@@ -230,14 +230,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtC-SC-ShT" userLabel="Fw Version">
-                                                    <rect key="frame" x="376" y="11" width="38" height="21"/>
+                                                    <rect key="frame" x="368" y="11" width="38" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="UtC-SC-ShT" firstAttribute="trailing" secondItem="TOk-Co-kVb" secondAttribute="trailingMargin" constant="8" id="DuJ-3x-9ya"/>
+                                                <constraint firstAttribute="trailing" secondItem="UtC-SC-ShT" secondAttribute="trailing" constant="8" id="KdX-1T-NoU"/>
                                                 <constraint firstItem="65r-Bk-IBh" firstAttribute="centerY" secondItem="TOk-Co-kVb" secondAttribute="centerY" id="TlJ-DY-ABB"/>
                                                 <constraint firstItem="65r-Bk-IBh" firstAttribute="leading" secondItem="TOk-Co-kVb" secondAttribute="leadingMargin" constant="8" id="b0S-Os-2vA"/>
                                                 <constraint firstItem="UtC-SC-ShT" firstAttribute="centerY" secondItem="TOk-Co-kVb" secondAttribute="centerY" id="ueR-9T-Q3A"/>
@@ -258,15 +258,15 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xI-h0-EdZ" userLabel="LoadedFW Version">
-                                                    <rect key="frame" x="376" y="11" width="38" height="21"/>
+                                                    <rect key="frame" x="368" y="11" width="38" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7xI-h0-EdZ" firstAttribute="trailing" secondItem="F2Q-aQ-BjM" secondAttribute="trailingMargin" constant="8" id="Gfs-tT-6nU"/>
                                                 <constraint firstItem="7xI-h0-EdZ" firstAttribute="centerY" secondItem="F2Q-aQ-BjM" secondAttribute="centerY" id="OTV-GQ-3PR"/>
+                                                <constraint firstAttribute="trailing" secondItem="7xI-h0-EdZ" secondAttribute="trailing" constant="8" id="ZUL-N8-F6h"/>
                                                 <constraint firstItem="hFj-CE-WFe" firstAttribute="leading" secondItem="F2Q-aQ-BjM" secondAttribute="leadingMargin" constant="8" id="o4G-YQ-wls"/>
                                                 <constraint firstItem="hFj-CE-WFe" firstAttribute="centerY" secondItem="F2Q-aQ-BjM" secondAttribute="centerY" id="vvS-kA-dDd"/>
                                             </constraints>
