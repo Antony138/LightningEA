@@ -10,6 +10,7 @@ import UIKit
 
 class DeviceViewController: UITableViewController {
     
+    // MARK:- Properties
     let notFoundAlert = UIAlertController(title: nil, message: nil, preferredStyle:UIAlertControllerStyle.alert)
     
     let updateAlert = UIAlertController(title: nil, message: nil, preferredStyle:UIAlertControllerStyle.alert)
@@ -46,7 +47,7 @@ class DeviceViewController: UITableViewController {
     
     @IBOutlet weak var updateFwBtn: UIButton!
     
-    
+    // MARK:- Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -96,6 +97,27 @@ class DeviceViewController: UITableViewController {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
+    
+    @IBAction func updateFw(_ sender: UIButton) {
+        
+        let device = CLEADevice.shared()
+        
+        if device.fwRevision != device.loadedFWVersion {
+            
+            updateAlert.title = "New FW version" + device.loadedFWVersion + "is available"
+            updateAlert.message = "This version fixes errors and improves stability"
+            
+            present(updateAlert, animated: true, completion: nil)
+        }
+        else {
+            
+            updateAlert.title = "FW version " + device.loadedFWVersion + " on device is up to date"
+            updateAlert.message = " Do you still want to update it?"
+            
+            present(updateAlert, animated: true, completion: nil)
+        }
+    }
+    
     
     // MARK:- 私有部分
     private func updateStatus() {
