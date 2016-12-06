@@ -334,7 +334,6 @@
                         <outlet property="hwSerialImageView" destination="MYb-LR-bOh" id="K3I-iJ-140"/>
                         <outlet property="hwSerialN" destination="odD-t0-Naj" id="r1j-FC-itz"/>
                         <outlet property="loadedFWVersion" destination="7xI-h0-EdZ" id="Hme-SX-9kR"/>
-                        <outlet property="updateFw" destination="0DM-i8-tl9" id="xad-ca-glF"/>
                         <outlet property="updateFwBtn" destination="0DM-i8-tl9" id="xff-Lb-1Tv"/>
                     </connections>
                 </tableViewController>
