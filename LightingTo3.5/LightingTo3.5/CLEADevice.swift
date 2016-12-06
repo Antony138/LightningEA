@@ -185,6 +185,23 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return CLEADevice.NA
     }
     
+    var SerialBarCodeImage: UIImage? {
+        let filter:CIFilter = CIFilter(name:"CICode128BarcodeGenerator")!
+        
+        // 获取到的字符串转成UTF8编码
+        if serialNumber != CLEADevice.NA {
+            let data = serialNumber.data(using: String.Encoding.utf8)
+            
+            filter.setValue(data, forKey: "inputMessage")
+            let image:CIImage = filter.outputImage!
+            
+            return UIImage(ciImage:image)
+        }
+        else {
+            return nil
+        }
+    }
+    
     var hwRevision: String {
         if let ea = getEA() {
             if ea.isConnected {

@@ -105,7 +105,7 @@ class DeviceViewController: UITableViewController {
         hwManufacturer.text     = device.manufacturer
         hwModel.text            = device.model
         hwSerialN.text          = device.serialNumber
-        hwSerialImageView.image = nil
+        hwSerialImageView.image = device.SerialBarCodeImage
         hwRevision.text         = device.hwRevision
         fwVersion.text          = device.fwRevision
         loadedFWVersion.text    = device.loadedFWVersion
