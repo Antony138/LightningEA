@@ -82,7 +82,7 @@ class DeviceViewController: UITableViewController {
         // 更新UI
         updateStatus()
         
-        // 注册通告, 收到HwStateChangedNotification、退到后台通告后, 更新UI
+        // 注册通告, 收到"HwStateChangedNotification"、"即将进入前台"通告后, 更新UI
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: CLEADevice.HwStateChangedNotification), object: nil, queue: nil, using: {(notification: Notification)in
             log(message: "CL EADevice status changed!", obj: self)
             self.updateStatus()
@@ -91,6 +91,13 @@ class DeviceViewController: UITableViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil, using: {(notification: Notification)in
             self.updateStatus()
         })
+        
+        // old method
+        /*
+         NotificationCenter.default.addObserver(self, selector: #selector(DeviceViewController.clEAStatusChanged(notification:)), name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: nil)
+         
+         NotificationCenter.default.addObserver(self, selector: #selector(DeviceViewController.clEAStatusChanged(notification:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+         */
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -118,6 +125,11 @@ class DeviceViewController: UITableViewController {
         }
     }
     
+    @objc func clEAStatusChanged(notification: NSNotification) {
+        log(message: "CL EADevice status changed!", obj: self)
+        
+        updateStatus()
+    }
     
     // MARK:- 私有部分
     private func updateStatus() {
