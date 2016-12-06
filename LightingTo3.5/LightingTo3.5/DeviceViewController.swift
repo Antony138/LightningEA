@@ -92,11 +92,58 @@ class DeviceViewController: UITableViewController {
         })
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK:- 私有部分
     private func updateStatus() {
-    
-    
-    
+        let device = CLEADevice.shared()
+        
+        hwName.text             = device.name
+        hwManufacturer.text     = device.manufacturer
+        hwModel.text            = device.model
+        hwSerialN.text          = device.serialNumber
+        hwSerialImageView.image = nil
+        hwRevision.text         = device.hwRevision
+        fwVersion.text          = device.fwRevision
+        loadedFWVersion.text    = device.loadedFWVersion
+        
+        let status = device.getStatus()
+        switch status {
+        case CLEADevice.STATUS_NOT_CONNECTED:
+            fwStatus.text = "Status: Not connected"
+            
+        case CLEADevice.STATUS_NOT_RESPONDING:
+            fwStatus.text = "Status: Not responding"
+            
+        case CLEADevice.STATUS_WAITING_RESPONSE:
+            fwStatus.text = "Status: Requesting status..."
+            
+        case CLEADevice.STATUS_FW_IS_RUNNING:
+            fwStatus.text = "Status: FW v\(device.fwVersion) is running"
+            
+        case CLEADevice.STATUS_WAITING_FW_DATA:
+            let bnum = CLEADevice.shared().getFlashingBlkNum()
+            fwStatus.text = "Status: " + (bnum < 0 ? "No FW, waiting for FW blocks to flash" : "Flashing FW block \(bnum)")
+            
+        case CLEADevice.STATUS_FAILED:
+            let bnum = CLEADevice.shared().getFlashingBlkNum()
+            fwStatus.text = "Status: " + (bnum < 0 ? "Failed" : "Flashing FW block \(bnum) failed")
+
+        default:
+            fwStatus.text = "Status: Device internal error \(status)"
+            log(message: "**** Device internal error \(status)", obj: self)
+        }
+        
+        // 升级按钮隐藏与否
+        if status == CLEADevice.STATUS_NOT_CONNECTED || status == CLEADevice.STATUS_NOT_RESPONDING {
+            updateFwBtn.isHidden = true
+        }
+        else {
+            updateFwBtn.isHidden = false
+        }
     }
 }
 
