@@ -321,6 +321,18 @@
                         </sections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Device" image="chip" id="OuS-9T-nRg"/>
+                    <connections>
+                        <outlet property="fwStatus" destination="EuT-BE-GDk" id="Gqd-tU-agt"/>
+                        <outlet property="fwVersion" destination="UtC-SC-ShT" id="myw-nf-69R"/>
+                        <outlet property="hwManufacturer" destination="hyv-RC-s4Q" id="go9-iR-DPt"/>
+                        <outlet property="hwModel" destination="Ljk-cH-4Sh" id="4cJ-a3-4HB"/>
+                        <outlet property="hwName" destination="Pdi-pP-dZS" id="3zy-fM-6Sw"/>
+                        <outlet property="hwRevision" destination="LBx-Gl-oeF" id="f31-kU-NT8"/>
+                        <outlet property="hwSerialImageView" destination="MYb-LR-bOh" id="K3I-iJ-140"/>
+                        <outlet property="hwSerialN" destination="odD-t0-Naj" id="r1j-FC-itz"/>
+                        <outlet property="loadedFWVersion" destination="7xI-h0-EdZ" id="Hme-SX-9kR"/>
+                        <outlet property="updateFwBtn" destination="0DM-i8-tl9" id="xff-Lb-1Tv"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
