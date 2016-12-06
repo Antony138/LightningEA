@@ -14,12 +14,12 @@ class DeviceViewController: UITableViewController {
     
     let updateAlert = UIAlertController(title: nil, message: nil, preferredStyle:UIAlertControllerStyle.alert)
     
-    let colseAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {
+    let closeAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {
         (act: UIAlertAction)in
         // do nothing
     })
     
-    let updteAction = UIAlertAction.init(title: "Update", style: UIAlertActionStyle.default, handler: {
+    let updateAction = UIAlertAction.init(title: "Update", style: UIAlertActionStyle.default, handler: {
         // 这个就是Swift中的闭包?
         (act: UIAlertAction)in
         CLEADevice.shared().updateFw()
@@ -59,13 +59,44 @@ class DeviceViewController: UITableViewController {
         
         self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 44.0, 0.0)
         self.tableView.showsVerticalScrollIndicator = false
-
         
-    }
+        notFoundAlert.addAction(closeAction)
+        updateAlert.addAction(updateAction)
+        updateAlert.addAction(closeAction)
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        log(message: " Device view!", obj: self)
+        
+        // 更新硬件的状态
+        let device = CLEADevice.shared()
+        
+        if !device.busy() {
+            device.updateDeviceStatus()
+        }
+        
+        // 更新UI
+        updateStatus()
+        
+        // 注册通告, 收到HwStateChangedNotification、退到后台通告后, 更新UI
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: CLEADevice.HwStateChangedNotification), object: nil, queue: nil, using: {(notification: Notification)in
+            log(message: "CL EADevice status changed!", obj: self)
+            self.updateStatus()
+        })
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil, using: {(notification: Notification)in
+            self.updateStatus()
+        })
+    }
+    
+    // MARK:- 私有部分
+    private func updateStatus() {
+    
+    
+    
     }
 }
 
