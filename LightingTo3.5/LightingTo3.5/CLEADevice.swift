@@ -19,6 +19,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
     
     // MARK:- 属性
     static let HwStateChangedNotification = "HwStateChanged"
+    static let DidConnectedDivice = "DidConnectedDivice"
     static let BusyTimeout = 10
     static let NA = "N/A"
     
@@ -483,6 +484,10 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         // Get EA object
         if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
             log(message: "\(ea)", obj: self)
+            
+            let deviceDataDict:[String: NSNotification] = [EAAccessoryKey: notification]
+            
+            NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.DidConnectedDivice), object: self, userInfo: deviceDataDict)
             
             if eaSupportsCLProtocol(ea: ea) {
                 if connectedAccessory != nil {

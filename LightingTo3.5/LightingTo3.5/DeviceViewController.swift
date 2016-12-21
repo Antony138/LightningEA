@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ExternalAccessory
 
 class DeviceViewController: UITableViewController {
     
@@ -45,7 +46,14 @@ class DeviceViewController: UITableViewController {
 
     @IBOutlet weak var fwStatus: UILabel!
     
+    @IBOutlet weak var otherLabel: UILabel!
+    
+    @IBOutlet weak var otherTextView: UITextView!
+    
+    
     @IBOutlet weak var updateFwBtn: UIButton!
+    
+    var protocolString: String = ""
     
     // MARK:- Methods
     override func viewDidLoad() {
@@ -56,6 +64,38 @@ class DeviceViewController: UITableViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.EAAccessoryDidConnect, object: nil, queue: nil, using: {
             (notification: Notification)in
             log(message: "EAAccessoryDidConnect", obj: self)
+            
+            if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
+                
+                for proto in ea.protocolStrings {
+                    
+                    if (self.protocolString.contains(proto) == false) && (proto.isEmpty == false) {
+                        self.protocolString += "「\(proto)/」;"
+                    }
+                    
+                }
+                
+                self.otherLabel.text = "「\(ea.name)」 Did Connect. \(self.protocolString)"
+                
+                self.otherTextView.text = "「\(ea.name)」 Did Connect;/ connectionID: \(ea.connectionID);/ manufacturer: \(ea.manufacturer);/ modelNumber: \(ea.modelNumber);/ serialNumber:\(ea.serialNumber);/ firmwareRevision: \(ea.firmwareRevision);/ hardwareRevision: \(ea.hardwareRevision);/"
+                 
+            }
+            
+            
+            
+        })
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.EAAccessoryDidDisconnect, object: nil, queue: nil, using: { (notification: Notification) in
+            
+            if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
+                
+                self.otherLabel.text = "「\(ea.name)」 Did Disconnect"
+                self.otherTextView.text = "「\(ea.name)」 Did Disconnect"
+                self.protocolString.removeAll()
+                
+            }
+            
+
         })
         
         self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 44.0, 0.0)
