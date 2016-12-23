@@ -186,6 +186,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return CLEADevice.NA
     }
     
+    /*
     var SerialBarCodeImage: UIImage? {
         let filter:CIFilter = CIFilter(name:"CICode128BarcodeGenerator")!
         
@@ -202,6 +203,7 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
             return nil
         }
     }
+ */
     
     var hwRevision: String {
         if let ea = getEA() {
@@ -489,6 +491,21 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
             
             NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.DidConnectedDivice), object: self, userInfo: deviceDataDict)
             
+            // "通用设备"版本
+            /*
+            if connectedAccessory != nil {
+                closeConnection()
+            }
+            
+            ea.delegate = self
+            
+            connectedAccessory = ea
+            
+            openConnection()
+            */
+            
+            
+            // Lighting耳机升级版本
             if eaSupportsCLProtocol(ea: ea) {
                 if connectedAccessory != nil {
                     // 如果有新硬件连接,但是connectedAccessory是有值的(表示有旧硬件), 要先将旧硬件的传输通道先关闭?
@@ -510,17 +527,33 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
                 log(message: "Connected EA does not support CL protocol", obj: self)
                 
                 // 这里究竟是做一种什么防呆?
+                // 连接硬件，会调用2、3次已经连接设备的回调
+                // 而且后面几次的回调，会没有procotol！(打印出空的)，但是硬件还是这个硬件
+                // 所以这里定义了一个quirkAccessory(假的硬件?)
+                // 好像这种情况会在某版本的iOS系统下出现
                 if let ca = connectedAccessory {
+                    // 如果已经有连接了的硬件，表示现在连接的、又不遵守protocol的硬件，是quirkAccessory
                     if ca.name == ea.name || ca.manufacturer == ea.manufacturer {
                         log(message: "*** Quirk EA is used to update invalid info", obj: self)
                         
                         ea.delegate = self
                         quirkAccessory = ea
                         
-//                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CLEADevice.HwStateChangedNotification), object: self)
-                        // 确认: 是否一定要上面的rawValue:
+                        // 确认: 是否一定要上面的rawValue(答:不需要)
                         NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
                     }
+                }
+                else {
+                    // 不是遵守协议的硬件，而且没有已经连接的硬件，表示这个是其他硬件
+                    log(message: "Other Device Connected", obj: self)
+                    
+                    ea.delegate = self
+                    
+                    connectedAccessory = ea
+                    
+                    openConnection()
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(CLEADevice.HwStateChangedNotification), object: self)
                 }
             
             }
@@ -545,11 +578,19 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
                 connectedAccessory = nil
             }
             else {
+                // 断开连接的硬件并不支持(遵守)protocol
                 log(message: "**** Disconnected EA does not support CL protocol", obj: self)
                 
                 if quirkAccessory?.connectionID == ea.connectionID {
                     log(message: "**** Quirk EA disconnected", obj: self)
                     quirkAccessory = nil
+                }
+                else {
+                    // 其他硬件
+                    if (connectedAccessory != nil) {
+                        closeConnection()
+                        connectedAccessory = nil
+                    }
                 }
             }
         }

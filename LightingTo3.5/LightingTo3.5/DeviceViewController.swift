@@ -36,7 +36,7 @@ class DeviceViewController: UITableViewController {
     
     @IBOutlet weak var hwSerialN: UILabel!
     
-    @IBOutlet weak var hwSerialImageView: UIImageView!
+    // @IBOutlet weak var hwSerialImageView: UIImageView!
     
     @IBOutlet weak var hwRevision: UILabel!
     
@@ -179,7 +179,7 @@ class DeviceViewController: UITableViewController {
         hwManufacturer.text     = device.manufacturer
         hwModel.text            = device.model
         hwSerialN.text          = device.serialNumber
-        hwSerialImageView.image = device.SerialBarCodeImage
+        // hwSerialImageView.image = device.SerialBarCodeImage
         hwRevision.text         = device.hwRevision
         fwVersion.text          = device.fwRevision
         loadedFWVersion.text    = device.loadedFWVersion
