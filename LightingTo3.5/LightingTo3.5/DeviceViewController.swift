@@ -59,44 +59,7 @@ class DeviceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        // 通告中的闭包?(OC中的Block?)
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.EAAccessoryDidConnect, object: nil, queue: nil, using: {
-            (notification: Notification)in
-            log(message: "EAAccessoryDidConnect", obj: self)
-            
-            if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
-                
-                for proto in ea.protocolStrings {
-                    
-                    if (self.protocolString.contains(proto) == false) && (proto.isEmpty == false) {
-                        self.protocolString += "「\(proto)/」;"
-                    }
-                    
-                }
-                
-                self.otherLabel.text = "「\(ea.name)」 Did Connect. \(self.protocolString)"
-                
-                self.otherTextView.text = "「\(ea.name)」 Did Connect;/ connectionID: \(ea.connectionID);/ manufacturer: \(ea.manufacturer);/ modelNumber: \(ea.modelNumber);/ serialNumber:\(ea.serialNumber);/ firmwareRevision: \(ea.firmwareRevision);/ hardwareRevision: \(ea.hardwareRevision);/"
-                 
-            }
-            
-            
-            
-        })
-        
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.EAAccessoryDidDisconnect, object: nil, queue: nil, using: { (notification: Notification) in
-            
-            if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
-                
-                self.otherLabel.text = "「\(ea.name)」 Did Disconnect"
-                self.otherTextView.text = "「\(ea.name)」 Did Disconnect"
-                self.protocolString.removeAll()
-                
-            }
-            
 
-        })
         
         self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 44.0, 0.0)
         self.tableView.showsVerticalScrollIndicator = false
@@ -183,6 +146,13 @@ class DeviceViewController: UITableViewController {
         hwRevision.text         = device.hwRevision
         fwVersion.text          = device.fwRevision
         loadedFWVersion.text    = device.loadedFWVersion
+
+        if device.protocolsString.isEmpty {
+            // 空的，表示拿到"假硬件"
+        }
+        else {
+            otherTextView.text = device.protocolsString
+        }
         
         let status = device.getStatus()
         switch status {

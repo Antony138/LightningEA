@@ -186,6 +186,21 @@ class CLEADevice: NSObject, EAAccessoryDelegate {
         return CLEADevice.NA
     }
     
+    var protocolsString: String {
+        if let ea = getEA() {
+            
+            var protoString: String = ""
+            
+            for proto in ea.protocolStrings {
+                protoString += " \(proto); "
+            }
+        
+            return protoString;
+        }
+        
+        return CLEADevice.NA
+    }
+    
     /*
     var SerialBarCodeImage: UIImage? {
         let filter:CIFilter = CIFilter(name:"CICode128BarcodeGenerator")!

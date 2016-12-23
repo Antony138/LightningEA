@@ -15,39 +15,37 @@ class TestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        
-
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(TestViewController.accessoryConnected(notification:)), name: NSNotification.Name(CLEADevice.DidConnectedDivice), object: nil)
+    
     }
-
-    @objc private func accessoryConnected(notification: NSNotification) {
+    
+    override func viewWillAppear(_ animated: Bool) {
         
-        if let ea = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
-            
-            self.textView.text = ea.name;
-            
+        // 注册通告, 收到"HwStateChangedNotification"、"即将进入前台"通告后, 更新UI
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: CLEADevice.HwStateChangedNotification), object: nil, queue: nil, using: {(notification: Notification)in
+            log(message: "CL EADevice status changed!", obj: self)
+            self.updateStatus()
+        })
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil, using: {(notification: Notification)in
+            self.updateStatus()
+        })
+        
+        
+        self.updateStatus()
+
+    }
+    
+    // MARK:- 私有部分
+    private func updateStatus() {
+        let device = CLEADevice.shared()
+        
+        
+        if device.protocolsString.isEmpty {
+            // 空的，表示拿到"假硬件"
         }
-    
+        else {
+            textView.text = device.protocolsString
+        }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
